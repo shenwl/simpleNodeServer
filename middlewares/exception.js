@@ -11,9 +11,14 @@ const catchError = async (ctx, next) => {
         httpMsg: error.httpMsg,
       }
       ctx.status = error.code;
+    } else {
+      ctx.body = {
+        msg: '未知异常',
+        errorCode: -10001,
+        httpMsg: '未知异常',
+      }
+      ctx.status = 500;
     }
-
-    console.error(e);
   }
 }
 
