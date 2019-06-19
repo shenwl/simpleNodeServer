@@ -1,5 +1,5 @@
 {
-  "name": "island_server",
+  "name": "simple_node_server",
   "version": "0.0.1",
   "main": "run.js",
   "author": "shenwl",
