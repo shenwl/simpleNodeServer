@@ -11,5 +11,6 @@ app.use(catchError);
 InitManager.initCore(app);
 
 app.listen(2333, () => {
+  // eslint-disable-next-line no-console
   console.log(`server running at http://localhost:2333`)
 });

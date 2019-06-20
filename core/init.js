@@ -12,7 +12,7 @@ class InitManager {
 
     requireDirectory(module, apiDir, {
       visit: (module) => {
-        if(module instanceof Router) {
+        if (module instanceof Router) {
           InitManager.app.use(module.routes());
         }
       }

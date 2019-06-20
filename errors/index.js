@@ -1,6 +1,6 @@
 module.exports = {
   HttpException: require('./httpException'),
   InternalServerException: require('./internalServerException'),
-  NotFountException: require('./notFountException'),
+  NotFountException: require('./notFoundException'),
   ParamException: require('./paramException'),
-}
+};
