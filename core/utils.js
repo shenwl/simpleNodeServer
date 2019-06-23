@@ -14,7 +14,7 @@ const findMembers = function (instance, {
     // 过滤掉不满足条件的属性或方法
     names = names.filter(name => _shouldKeep(name));
 
-    return [...names, ..._find(instance.__proto__)];
+    return [...names, ..._find(instance.__proto__)]; 
   }
 
   function _shouldKeep(name) {
