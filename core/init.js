@@ -1,10 +1,17 @@
 const Router = require('koa-router');
 const requireDirectory = require('require-directory');
 
+
 class InitManager {
   static initCore(app) {
     InitManager.app = app;
     InitManager.loadRouters();
+  }
+
+  static loadConfig(path = '') {
+    const configPath = path || (process.cwd() + '/config/config.js');
+    const config = require(configPath);
+    global.config = config;
   }
 
   static loadRouters() {
