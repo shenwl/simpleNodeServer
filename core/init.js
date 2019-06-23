@@ -5,6 +5,7 @@ const requireDirectory = require('require-directory');
 class InitManager {
   static initCore(app) {
     InitManager.app = app;
+    InitManager.loadConfig();
     InitManager.loadRouters();
   }
 
