@@ -28,20 +28,6 @@ class ParamValidator {
     };
   }
 
-  get(path, parsed = true) {
-    if (parsed) {
-      const value = get(this.parsed, path, null);
-      if (value === null) {
-        const keys = path.split('.');
-        const key = last(keys);
-        return get(this.parsed.default, key);
-      }
-      return value;
-    } else {
-      return get(this.data, path);
-    }
-  }
-
   _findMembersFilter(key) {
     if (/validate([A-Z])\w+/g.test(key)) {
       return true;
@@ -56,31 +42,6 @@ class ParamValidator {
       return true;
     }
     return false;
-  }
-
-  async validate(ctx, alias = {}) {
-    this.alias = alias;
-    let params = this._assembleAllParams(ctx);
-    this.data = cloneDeep(params);
-    this.parsed = cloneDeep(params);
-
-    const memberKeys = findMembers(this, {
-      filter: this._findMembersFilter.bind(this)
-    });
-
-    const errorMsgs = [];
-    // const map = new Map(memberKeys)
-    for (let key of memberKeys) {
-      const result = await this._check(key, alias);
-      if (!result.success) {
-        errorMsgs.push(result.msg);
-      }
-    }
-    if (errorMsgs.length !== 0) {
-      throw new ParameterException(errorMsgs);
-    }
-    ctx.v = this;
-    return this;
   }
 
   async _check(key, alias = {}) {
@@ -161,6 +122,45 @@ class ParamValidator {
       path: []
     };
   }
+
+  async validate(ctx, alias = {}) {
+    this.alias = alias;
+    let params = this._assembleAllParams(ctx);
+    this.data = cloneDeep(params);
+    this.parsed = cloneDeep(params);
+
+    const memberKeys = findMembers(this, {
+      filter: this._findMembersFilter.bind(this)
+    });
+
+    const errorMsgs = [];
+    // const map = new Map(memberKeys)
+    for (let key of memberKeys) {
+      const result = await this._check(key, alias);
+      if (!result.success) {
+        errorMsgs.push(result.msg);
+      }
+    }
+    if (errorMsgs.length !== 0) {
+      throw new ParameterException(errorMsgs);
+    }
+    ctx.v = this;
+    return this;
+  }
+
+  get(path, parsed = true) {
+    if (parsed) {
+      const value = get(this.parsed, path, null);
+      if (value === null) {
+        const keys = path.split('.');
+        const key = last(keys);
+        return get(this.parsed.default, key);
+      }
+      return value;
+    } else {
+      return get(this.data, path);
+    }
+  }
 }
 
 class RuleResult {
@@ -189,8 +189,9 @@ class Rule {
   }
 
   validate(field) {
-    if (this.name === 'isOptional')
+    if (this.name === 'isOptional') {
       return new RuleResult(true);
+    }
     if (!validator[this.name](field + '', ...this.params)) {
       return new RuleResult(false, this.msg || this.message || '参数错误');
     }
@@ -210,9 +211,8 @@ class RuleField {
       const defaultValue = this._hasDefault();
       if (allowEmpty) {
         return new RuleFieldResult(true, '', defaultValue);
-      } else {
-        return new RuleFieldResult(false, '字段是必填参数');
       }
+      return new RuleFieldResult(false, '字段是必填参数');
     }
 
     const filedResult = new RuleFieldResult(false);
