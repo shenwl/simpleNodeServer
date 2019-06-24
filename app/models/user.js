@@ -12,7 +12,10 @@ User.init({
     autoIncrement: true,
   },
   nickname: Sequelize.STRING(128),
-  email: Sequelize.STRING,
+  email: {
+    type: Sequelize.STRING(128),
+    unique: true,
+  },
   password: Sequelize.STRING,
   openid: {
     type: Sequelize.STRING,
@@ -20,5 +23,7 @@ User.init({
   },
 }, { sequelize, tableName: 'user' });
 
+
+module.exports = User;
 
 
