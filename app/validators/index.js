@@ -1,10 +1,11 @@
 const { ParamValidator, Rule } = require('../../core/paramValidator');
+const User = require('../models/user');
 
 class RegisterValidator extends ParamValidator {
   constructor() {
     super();
     this.email = [
-      new Rule('isEmail', 'email不符合规范')
+      new Rule('isEmail', '邮箱不符合规范')
     ];
     this.password = [
       new Rule('isLength', '密码为6-32个字符', {
@@ -19,6 +20,15 @@ class RegisterValidator extends ParamValidator {
         max: 32
       })
     ];
+  }
+  async validateEmail(vals) {
+    const email = vals.body.email;
+    const user = await User.findOne({
+      where: {
+        email,
+      }
+    });
+    if (user) throw Error('邮箱已注册');
   }
 }
 
