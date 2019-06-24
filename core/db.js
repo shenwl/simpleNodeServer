@@ -24,7 +24,10 @@ const sequelize = new Sequelize(dbName, user, password, {
 });
 
 // 让sequelize在数据库里创建模型
-sequelize.sync();
+sequelize.sync({
+  // model更新后删除table重建，开发时使用
+  force: true,
+});
 
 module.exports = {
   sequelize,
