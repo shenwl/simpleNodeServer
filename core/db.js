@@ -18,4 +18,9 @@ const sequelize = new Sequelize(dbName, user, password, {
   define: {},
 });
 
-module.exports = sequelize;
+// 让sequelize在数据库里创建模型
+sequelize.sync();
+
+module.exports = {
+  sequelize,
+};
