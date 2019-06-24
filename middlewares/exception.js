@@ -4,8 +4,6 @@ const catchError = async (ctx, next) => {
   try {
     await next();
   } catch (error) {
-    if(global.config.environment === 'dev') throw error;
-
     if (error instanceof HttpException) {
       ctx.body = {
         msg: error.msg,
@@ -14,6 +12,8 @@ const catchError = async (ctx, next) => {
       };
       ctx.status = error.code;
     } else {
+      if(global.config.environment === 'dev') throw error;
+
       ctx.body = {
         msg: '未知异常',
         errorCode: -10001,
