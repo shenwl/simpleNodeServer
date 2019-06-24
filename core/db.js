@@ -15,7 +15,12 @@ const sequelize = new Sequelize(dbName, user, password, {
   port,
   logging: true,
   timezone: '+08:00',
-  define: {},
+  define: {
+    // create_time, update_time
+    timestamps: true,
+    // delete_time
+    paranoid: true,
+  },
 });
 
 // 让sequelize在数据库里创建模型
