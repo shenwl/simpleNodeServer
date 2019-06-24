@@ -1,7 +1,7 @@
 const validator = require('validator');
 const {
-  ParameterException
-} = require('./http-exception');
+  ParamException
+} = require('../errors');
 const {
   get,
   last,
@@ -142,7 +142,7 @@ class ParamValidator {
       }
     }
     if (errorMsgs.length !== 0) {
-      throw new ParameterException(errorMsgs);
+      throw new ParamException(errorMsgs);
     }
     ctx.v = this;
     return this;
