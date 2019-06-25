@@ -1,13 +1,12 @@
 const Router = require('koa-router');
 
+const { SuccessException } = require('../../../exceptions');
 const { RegisterValidator } = require('../../validators');
 const User = require('../../models/user');
 
 const router = new Router({
   prefix: '/api/v1/user'
 });
-
-
 
 router.post('/register', async (ctx) => {
   const params = await new RegisterValidator().validate(ctx);
@@ -18,10 +17,7 @@ router.post('/register', async (ctx) => {
     nickname: params.get('body.nickname'),
   };
   await User.create(user);
-  ctx.body = {
-    success: true,
-    msg: '创建成功',
-  };
+  throw new SuccessException('创建成功');
 });
 
 module.exports = router;
