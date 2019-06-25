@@ -4,7 +4,7 @@ const ERROR_CODE = 50000;
 
 class InternalServerError extends HttpException {
   constructor(msg) {
-    super(500, '服务器好像开小差了', ERROR_CODE, `something wrong: ${msg}`);
+    super(50, ERROR_CODE, `服务器错误: ${msg}`);
   }
 }
 

@@ -27,7 +27,7 @@ User.init({
     type: Sequelize.STRING,
     set(val) {
       const pwd = hashPassword(val);
-      this.setDataValue(pwd);
+      this.setDataValue('password', pwd);
     },
   },
   openid: {

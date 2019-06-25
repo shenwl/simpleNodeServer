@@ -18,6 +18,10 @@ router.post('/register', async (ctx) => {
     nickname: params.get('body.nickname'),
   };
   await User.create(user);
+  ctx.body = {
+    success: true,
+    msg: '创建成功',
+  };
 });
 
 module.exports = router;

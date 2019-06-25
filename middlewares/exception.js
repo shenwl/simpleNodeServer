@@ -1,4 +1,4 @@
-const HttpException = require('../errors/httpException');
+const HttpException = require('../exceptions/httpException');
 
 const catchError = async (ctx, next) => {
   try {

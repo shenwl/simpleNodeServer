@@ -1,7 +1,7 @@
 const validator = require('validator');
 const {
   ParamException
-} = require('../errors');
+} = require('../exceptions');
 const {
   get,
   last,
