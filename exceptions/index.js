@@ -3,4 +3,5 @@ module.exports = {
   InternalServerException: require('./internalServerException'),
   NotFountException: require('./notFoundException'),
   ParamException: require('./paramException'),
+  SuccessException: require('./successException'),
 };
