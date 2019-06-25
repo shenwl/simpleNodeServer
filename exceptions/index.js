@@ -4,4 +4,5 @@ module.exports = {
   NotFoundException: require('./notFoundException'),
   ParamException: require('./paramException'),
   SuccessException: require('./successException'),
+  AuthFailed: require('./authFailed'),
 };
