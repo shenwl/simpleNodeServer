@@ -1,14 +1,16 @@
 const Router = require('koa-router');
-const router = new Router();
+const router = new Router({
+  prefix: '/api/v1/book'
+});
 
-router.get('/api/v1/book/latest', async (ctx, next) => {
+router.get('/latest', async (ctx) => {
   ctx.body = {
     "content": "book",
     "id": 1,
   };
 });
 
-router.post('/api/v1/book', async (ctx, next) => {
+router.post('/', async (ctx) => {
   ctx.body = {
     "content": "book",
     "id": 1,
