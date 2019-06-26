@@ -3,6 +3,7 @@ const { TokenValidator } = require('../../validators');
 const { LOGIN_TYPES } = require('../../constants/enum');
 const AUTH = require('../../constants/auth');
 const User = require('../../models/user');
+const WXService = require('../../services/wx');
 const { ParamException } = require('../../../exceptions');
 const { generateToken } = require('../../../core/utils');
 
@@ -24,6 +25,9 @@ router.post('/', async (ctx) => {
     [LOGIN_TYPES.ADMIN_EMAIL]: async (email, password) => {
       const user = await User.verifyEmailPassword(email, password);
       return generateToken(user.id, AUTH.ADMIN);
+    },
+    [LOGIN_TYPES.USER_MINI_PROGRAM]: async (account) => {
+      return WXService.codeToToken(account);
     },
   };
 
