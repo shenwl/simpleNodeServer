@@ -21,9 +21,10 @@ function auth(auth) {
 
       if (scope < authLevel) throw new Forbbiden('权限不足');
     } catch (error) {
-      if(error.name === 'TokenExpired') {
-        throw new Forbbiden('token过期');
-      }
+      if(error.name === 'TokenExpiredError') throw new Forbbiden('token过期');
+
+      if(error instanceof Forbbiden) throw error;
+
       throw new Forbbiden('token不合法');
     }
 
