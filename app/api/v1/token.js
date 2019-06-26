@@ -1,6 +1,7 @@
 const Router = require('koa-router');
 const { TokenValidator } = require('../../validators');
 const { LOGIN_TYPES } = require('../../constants/enum');
+const AUTH = require('../../constants/auth');
 const User = require('../../models/user');
 const { ParamException } = require('../../../exceptions');
 const { generateToken } = require('../../../core/utils');
@@ -18,8 +19,12 @@ router.post('/', async (ctx) => {
   const typeHandlers = {
     [LOGIN_TYPES.USER_EMAIL]: async (email, password) => {
       const user = await User.verifyEmailPassword(email, password);
-      return generateToken(user.id, 2);
-    }
+      return generateToken(user.id, AUTH.USER);
+    },
+    [LOGIN_TYPES.ADMIN_EMAIL]: async (email, password) => {
+      const user = await User.verifyEmailPassword(email, password);
+      return generateToken(user.id, AUTH.ADMIN);
+    },
   };
 
   const handler = typeHandlers[type];
