@@ -8,5 +8,9 @@ module.exports = {
     port: 3306,
     user: 'root',
     password: '960208',
-  }
+  },
+  security: {
+    secretKey: 'i8vD8orMeiWwkvwLgKynTD',
+    expiresIn: 60 * 60,
+  },
 };

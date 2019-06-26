@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 
-
 const findMembers = function (instance, {
   prefix,
   specifiedType,
@@ -14,7 +13,7 @@ const findMembers = function (instance, {
     // 过滤掉不满足条件的属性或方法
     names = names.filter(name => _shouldKeep(name));
 
-    return [...names, ..._find(instance.__proto__)]; 
+    return [...names, ..._find(instance.__proto__)];
   }
 
   function _shouldKeep(name) {
@@ -33,12 +32,14 @@ const findMembers = function (instance, {
 const generateToken = function (uid, scope) {
   const secretKey = global.config.security.secretKey;
   const expiresIn = global.config.security.expiresIn;
+
   const token = jwt.sign({
     uid,
-    scope
+    scope,
   }, secretKey, {
-    expiresIn
+    expiresIn,
   });
+
   return token;
 };
 
