@@ -1,3 +1,5 @@
+const wx = require('./wx');
+
 module.exports = {
   // prod or dev
   environment: 'dev',
@@ -13,4 +15,5 @@ module.exports = {
     secretKey: 'i8vD8orMeiWwkvwLgKynTD',
     expiresIn: 60 * 60 * 2,
   },
+  wx,
 };
