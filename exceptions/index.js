@@ -5,4 +5,5 @@ module.exports = {
   ParamException: require('./paramException'),
   SuccessException: require('./successException'),
   AuthFailed: require('./authFailed'),
+  Forbbiden: require('./forbbiden'),
 };
