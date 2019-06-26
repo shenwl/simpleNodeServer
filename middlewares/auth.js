@@ -3,26 +3,32 @@ const jwt = require('jsonwebtoken');
 
 const { Forbbiden } = require('../exceptions');
 
-async function auth(ctx, next) {
-  const userToken = basicAuth(ctx.req);
-  if(!userToken || !userToken.name) throw new Forbbiden('token不合法');
+function auth(auth) {
+  const authLevel = auth;
 
-  try {
-    const decode = jwt.verify(userToken.name, global.config.security.secretKey);
-    const { uid, scope } = decode || {};
+  return async (ctx, next) => {
+    const userToken = basicAuth(ctx.req);
+    if(!userToken || !userToken.name) throw new Forbbiden('token不合法');
 
-    ctx.auth = {
-      uid,
-      scope,
-    };
-  } catch (error) {
-    if(error.name === 'TokenExpired') {
-      throw new Forbbiden('token过期');
+    try {
+      const decode = jwt.verify(userToken.name, global.config.security.secretKey);
+      const { uid, scope } = decode || {};
+
+      ctx.auth = {
+        uid,
+        scope,
+      };
+
+      if (scope < authLevel) throw new Forbbiden('权限不足');
+    } catch (error) {
+      if(error.name === 'TokenExpired') {
+        throw new Forbbiden('token过期');
+      }
+      throw new Forbbiden('token不合法');
     }
-    throw new Forbbiden('token不合法');
-  }
 
-  await next();
+    await next();
+  };
 }
 
 module.exports = auth;
