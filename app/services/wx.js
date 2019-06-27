@@ -20,7 +20,7 @@ class WXService {
 
     if(ret.status !== 200) throw new AuthFailed('openid获取失败');
 
-    if(ret.data.errcode !== 0) throw new AuthFailed(`openid获取失败: ${ret.data.errmsg}`);
+    if(ret.data.errcode) throw new AuthFailed(`openid获取失败: ${ret.data.errmsg}`);
 
     const { openid } = ret.data;
     const user = await User.findByOpenid(openid) || await User.registerByOpenid(openid);
