@@ -1,11 +1,21 @@
 const Router = require('koa-router');
-const { TokenValidator } = require('../../validators');
+const { TokenValidator, NotEmptyValidator } = require('../../validators');
 const { LOGIN_TYPES } = require('../../constants/enum');
 const AUTH = require('../../constants/auth');
 const User = require('../../models/user');
 const WXService = require('../../services/wx');
 const { ParamException } = require('../../../exceptions');
 const { generateToken } = require('../../../core/utils');
+const jwt = require('jsonwebtoken');
+
+function verifyToken(token) {
+  try {
+    jwt.verify(token, global.config.security.secretKey);
+    return true;
+  } catch(e) {
+    return false;
+  }
+}
 
 const router = new Router({
   prefix: '/api/v1/token'
@@ -38,6 +48,14 @@ router.post('/', async (ctx) => {
 
   ctx.body = {
     token
+  };
+});
+
+router.post('/verify', async (ctx) => {
+  const params = new NotEmptyValidator().validate(ctx);
+  const token = params.get('body.token');
+  ctx.body = {
+    result: verifyToken(token)
   };
 });
 
