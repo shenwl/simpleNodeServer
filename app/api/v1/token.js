@@ -52,7 +52,7 @@ router.post('/', async (ctx) => {
 });
 
 router.post('/verify', async (ctx) => {
-  const params = new NotEmptyValidator().validate(ctx);
+  const params = await new NotEmptyValidator().validate(ctx);
   const token = params.get('body.token');
   ctx.body = {
     result: verifyToken(token)
