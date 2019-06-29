@@ -14,12 +14,13 @@ function auth(auth) {
       const decode = jwt.verify(userToken.name, global.config.security.secretKey);
       const { uid, scope } = decode || {};
 
+      if (scope < authLevel) throw new Forbbiden('权限不足');
+
       ctx.auth = {
         uid,
         scope,
       };
-
-      if (scope < authLevel) throw new Forbbiden('权限不足');
+      await next();
     } catch (error) {
       if(error.name === 'TokenExpiredError') throw new Forbbiden('token过期');
 
@@ -27,8 +28,6 @@ function auth(auth) {
 
       throw new Forbbiden('token不合法');
     }
-
-    await next();
   };
 }
 
