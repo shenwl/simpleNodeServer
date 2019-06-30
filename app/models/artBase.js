@@ -8,7 +8,7 @@ module.exports = {
   },
   title: Sequelize.STRING,
   content: Sequelize.STRING,
-  icon: Sequelize.STRING,
+  image: Sequelize.STRING,
   pubdate: Sequelize.DATEONLY,
   favNums: Sequelize.INTEGER,
   type: Sequelize.INTEGER, // 1 movie 2 music 3 sentence
