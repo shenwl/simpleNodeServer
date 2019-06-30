@@ -20,6 +20,7 @@ const sequelize = new Sequelize(dbName, user, password, {
     timestamps: true,
     // delete_time
     paranoid: true,
+    underscored: true,
   },
 });
 
