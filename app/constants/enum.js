@@ -15,7 +15,14 @@ const inLoginTypes = (val) => {
   return false;
 };
 
+const ART = {
+  MOVIE: 1,
+  MUSIC: 2,
+  SENTENCE: 3,
+};
+
 module.exports = {
   LOGIN_TYPES,
+  ART,
   inLoginTypes,
 };
