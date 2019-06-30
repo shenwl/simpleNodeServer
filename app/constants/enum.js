@@ -16,9 +16,9 @@ const inLoginTypes = (val) => {
 };
 
 const ART = {
-  MOVIE: 1,
-  MUSIC: 2,
-  SENTENCE: 3,
+  MOVIE: 100,
+  MUSIC: 200,
+  SENTENCE: 300,
 };
 
 module.exports = {
