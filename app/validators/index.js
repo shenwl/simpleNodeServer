@@ -69,8 +69,21 @@ class NotEmptyValidator extends ParamValidator {
   }
 }
 
+class LikeValidator extends ParamValidator {
+  constructor() {
+    super();
+    this.artId = [
+      new Rule('isLength', '请传入作品id', { min: 1 })
+    ];
+    this.type = [
+      new Rule('isInt', '请传入作品类型')
+    ];
+  }
+}
+
 module.exports = {
   RegisterValidator,
   TokenValidator,
   NotEmptyValidator,
+  LikeValidator,
 };

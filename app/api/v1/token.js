@@ -18,7 +18,7 @@ function verifyToken(token) {
 }
 
 const router = new Router({
-  prefix: '/api/v1/token'
+  prefix: '/v1/token'
 });
 
 router.post('/', async (ctx) => {

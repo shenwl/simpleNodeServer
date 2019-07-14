@@ -5,7 +5,7 @@ const { RegisterValidator } = require('../../validators');
 const User = require('../../models/user');
 
 const router = new Router({
-  prefix: '/api/v1/user'
+  prefix: '/v1/user'
 });
 
 router.post('/register', async (ctx) => {
